@@ -1,24 +1,26 @@
 const express = require('express');
 const db = require('./config/connection');
+const routes = require('./routes')
 
-const Profile = require('./models/Profile.js');
+const User = require('./models/User.js');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(routes);
 
-app.get('/all-users', (req, res) => {
-    Profile.find({}, (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send(err);
-        } else {
-            res.status(200).send(result)
-        }
-    });
-});
+// app.get('/all-users', (req, res) => {
+//     User.find({}, (err, result) => {
+//         if (err) {
+//             console.error(err);
+//             res.status(500).send(err);
+//         } else {
+//             res.status(200).send(result)
+//         }
+//     });
+// });
 
 
 db.once('open', () => {
