@@ -1,4 +1,4 @@
-const { Thought, User } = require('../models');
+const { Thought, User, Reaction } = require('../models');
 
 module.exports = {
     getThoughts(req, res) {
@@ -36,4 +36,21 @@ module.exports = {
             res.status(500).json(err);
         });
     },
+    addReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $push: { reactions: req.body } },
+            // { new: true }
+        )
+        .then((thought) => 
+        !thought
+        ? res
+            .status(404)
+            .json({ message: "Thought ID not found" })
+        : res.json("Added reaction to the thought")
+        )
+        .catch((err) => res.status(500).json(err));
+    },
 };
+
+// /api/thoughts/:thoughtId/reactions
