@@ -1,7 +1,12 @@
+const { ObjectId } = require('mongodb');
 const { Schema, model } = require('mongoose');
 
-const responseSchema = new Schema(
+const reactionSchema = new Schema(
     {
+        reactionId: {
+            type: ObjectId,
+            default: new ObjectId
+        },
         username: {
             type: String,
             required: true
@@ -18,6 +23,6 @@ const responseSchema = new Schema(
     },
 );
 
-const Response = model('Response', responseSchema);
+const Reaction = model('Reaction', reactionSchema);
 
-module.exports = Response;
+module.exports = Reaction;

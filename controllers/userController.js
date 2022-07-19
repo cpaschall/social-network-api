@@ -6,15 +6,16 @@ module.exports = {
     getUsers(req, res) {
         User.find()
         .populate('thoughts')
+        .populate('friends', { username: 1 })
         .then((users) => res.json(users))
         .catch((err) => res.status(500).json(err));
     },
     // get one user
     getSingleUser(req, res) {
         User.findOne({_id: req.params.userId })
-        // .populate('thoughts')
         .select('-__v')
         .populate('thoughts')
+        .populate('friends', { username: 1 })
         .then((user) => 
         !user 
         ? res.status(404).json({ message: 'No user with that ID' }) 
@@ -27,5 +28,24 @@ module.exports = {
         User.create(req.body)
         .then((dbUserData) => res.json(dbUserData))
         .catch((err) => res.status(500).json(err));
+    },
+    //  add a friend to user's friend list
+    addFriend(req, res) {
+        User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $push: { friends: req.params.friendId } },
+            // { new: true }
+        )
+        .then((user) => 
+        !user
+        ? res
+            .status(404)
+            .json({ message: 'Friend created, but found no user with that ID' })
+        : res.json('Added Friend to friend list')
+        )
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
     },
 };

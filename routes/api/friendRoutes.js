@@ -1,7 +1,14 @@
-const router = require('express').Router();
-const { model } = require('mongoose');
-const { createFriend } = require('../../controllers/friendController');
+// const router = require('express').Router();
+// // const { model } = require('mongoose');
+// const { createFriend } = require('../../controllers/friendController');
 
-router.route('/').post(createFriend);
+// router.route('/').post(createFriend);
 
-module.exports = router;
+// module.exports = router;
+
+// const router = require('express').Router();
+// const { createFriend } = require('../../controllers/friendController');
+
+// router.route('/').post(createFriend);
+
+// module.exports = router;
