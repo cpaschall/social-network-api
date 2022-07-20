@@ -32,8 +32,9 @@ Fork the repo and clone the code into a VScode or a similiar code editor. Open t
 
 The user can **Create**, **Read**, **Update** and **Delete** data from the database through a server application like [**_Insomnia_**](https://insomnia.rest/download) through **GET**, **POST**, **PUT** and **DELETE**, respectively.
 
-(video)
-![Walkthrough Video]()
+[Walkthrough Video - Part 1](https://drive.google.com/file/d/1vaUL0WI5PCb7HpuwBFmM1qkUp2UolGKU/view)
+<br>
+[Walkthrough Video - Part 2](https://drive.google.com/file/d/1EPi4sypKx50VVl1WE3n5Akw43QOv_BGl/view)
 
 ## <a id="Contributing">Contributing</a>
 
