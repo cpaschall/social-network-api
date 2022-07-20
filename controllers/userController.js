@@ -1,12 +1,13 @@
 // const { ObjectId } = require('mongoose').Types;
-const User = require('../models/User');
+const { Thought, User } = require('../models');
 
 module.exports = {
     // get all users
     getUsers(req, res) {
         User.find()
         .populate('thoughts')
-        .populate('friends', { username: 1 })
+        .populate('friends')
+        // .populate('friends', { username: 1 })
         .then((users) => res.json(users))
         .catch((err) => res.status(500).json(err));
     },
@@ -15,7 +16,8 @@ module.exports = {
         User.findOne({_id: req.params.userId })
         .select('-__v')
         .populate('thoughts')
-        .populate('friends', { username: 1 })
+        .populate('friends')
+        // .populate('friends', { username: 1 })
         .then((user) => 
         !user 
         ? res.status(404).json({ message: 'No user with that ID' }) 
@@ -78,16 +80,15 @@ module.exports = {
     },
     //  deletes a friend from user's friend list
     deleteFriend(req, res) {
-        // User.findOneAndDelete({ _id: req.params.friendId })
         User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $pull: { friends: { _id: req.params.friendId } } } ,
+            { $pull: { friends: { _id: req.params.friendId } } },
             { runValidators: true, new: true }
         )
-        .then((user) =>
-            !user
-                ? res.status(404).json({ message: "No friend exists with that ID" })
-                : res.json(user)
+        .then((user) => 
+        !user
+        ? res.status(404).json({ message: "No friend with this ID" })
+        : res.json(user)
         )
         .catch((err) => res.status(500).json(err));
     },

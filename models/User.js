@@ -22,38 +22,18 @@ const userSchema = new Schema(
                 ref: 'User'
             }
         ]
+    },
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        id: false
     }
 );
 
-// const friendListSchema = new Schema({
-//     username: { type: String, required: true },
-//     email: { type: String, required: true }
-// });
-
-// const profileSchema = new Schema({
-//     user: userSchema,
-//     friends: [friendListSchema]
-// });
-
-// const Profile = model('Profile', profileSchema);
-
-// // const handleError = (err) => console.error(err);
-
-// const userData = { username: 'hobbz', email: 'hobbz12@email.com', thoughts: ["hello there", "I was just thinking..."] };
-// const userFriendData = [
-//     { username: "bobloblaw", email:"bll@email.com" },
-//     { username: "biggieSmalls", email:"bigNsmall@email.com" },
-// ];
-
-// Profile.create(
-//     { user: userData, friends: userFriendData },
-//     (err, data) => {
-//         if (err) {
-//             console.log(err);
-//         }
-//         console.log(data);
-//     }
-// );
+userSchema.virtual('friendCount').get(function () {
+    return this.friends.length
+});
 
 const User = model('User', userSchema);
 
